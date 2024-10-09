@@ -127,5 +127,3 @@ For any questions or support, please create an issue in the [GitHub repo](https:
 - `Docker`
 
 ---
-
-This version clearly presents two distinct options for deployment: running locally or using Docker. Let me know if you'd like any further changes!
