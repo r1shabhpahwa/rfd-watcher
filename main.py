@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 import xml.etree.ElementTree as ET
 
@@ -12,9 +13,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 logging.basicConfig(filename="rss_watcher.log", level=logging.INFO,
                     format="%(asctime)s - %(levelname)s - %(message)s")
 
-# Pushover credentials (replace with your actual token and user key)
-PUSHOVER_TOKEN = ""
-PUSHOVER_USER_KEY = ""
+# Read Pushover credentials from environment variables
+PUSHOVER_TOKEN = os.getenv("PUSHOVER_TOKEN")
+PUSHOVER_USER_KEY = os.getenv("PUSHOVER_USER_KEY")
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -109,4 +110,5 @@ def monitor_feed():
 
 
 if __name__ == "__main__":
+    send_initial_notification()
     monitor_feed()
