@@ -14,60 +14,54 @@ This Python project monitors the **RedFlagDeals "Hot Deals" forum** RSS feed and
 ## Requirements
 
 - **Pushover account**: You'll need to create a Pushover application and obtain your `PUSHOVER_TOKEN` and `PUSHOVER_USER_KEY`. Visit [Pushover](https://pushover.net/) to create your account.
-- **Docker**: If you plan to run the application in a Docker container, ensure Docker is installed. You can download Docker from [here](https://docs.docker.com/get-docker/).
+- **Docker** (optional): If you plan to run the application in a Docker container, ensure Docker is installed. You can download Docker from [here](https://docs.docker.com/get-docker/).
 
 ## Setup and Usage
 
-### 1. Clone the repository:
+### Option 1: Run Locally (Without Docker)
+
+1. Clone the repository:
 
 ```bash
 git clone https://github.com/yourusername/rfd-watcher.git
 cd rfd-watcher
 ```
 
-### 2. Install dependencies:
-
-If you're running the script without Docker, install the required dependencies using `pip`:
+2. Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Set Your Pushover Credentials
-
-You need to set the following environment variables in your system:
-
-- `PUSHOVER_TOKEN`: Your Pushover application's API token.
-- `PUSHOVER_USER_KEY`: Your Pushover user key.
-
-You can set these using the terminal:
+3. Set your Pushover credentials as environment variables:
 
 ```bash
 export PUSHOVER_TOKEN=your_pushover_token
 export PUSHOVER_USER_KEY=your_pushover_user_key
 ```
 
-### 4. Run the Script
-
-You can run the script locally:
+4. Run the script:
 
 ```bash
 python rfd_watcher.py
 ```
 
-### 5. Run with Docker
+### Option 2: Run with Docker
 
-#### Step 1: Build the Docker Image
+1. Clone the repository:
 
-If you'd like to run the application inside a Docker container, first build the image:
+```bash
+git clone https://github.com/yourusername/rfd-watcher.git
+cd rfd-watcher
+```
+
+2. Build the Docker image:
 
 ```bash
 docker build -t rfd_watcher_image .
 ```
 
-#### Step 2: Run the Docker Container
-
-You can pass your Pushover credentials as environment variables when running the container:
+3. Run the Docker container, passing your Pushover credentials as environment variables:
 
 ```bash
 docker run -d \
@@ -76,32 +70,30 @@ docker run -d \
   rfd_watcher_image
 ```
 
-Alternatively, you can use an `.env` file to store your credentials:
+Alternatively, use an `.env` file for your credentials:
 
-1. Create a `.env` file:
+1. Create a `.env` file with your credentials:
 
 ```bash
 PUSHOVER_TOKEN=your_pushover_token
 PUSHOVER_USER_KEY=your_pushover_user_key
 ```
 
-2. Run the container with the `.env` file:
+2. Run the Docker container using the `.env` file:
 
 ```bash
 docker run --env-file .env -d rfd_watcher_image
 ```
 
-### 6. Check Logs
+### Checking Logs and Stopping the Docker Container
 
-To see logs from the running container:
+To view logs from the running container:
 
 ```bash
 docker logs <container_id>
 ```
 
-### 7. Stopping the Container
-
-To stop the container, you can use the `docker stop` command:
+To stop the container:
 
 ```bash
 docker stop <container_id>
@@ -135,3 +127,5 @@ For any questions or support, please create an issue in the [GitHub repo](https:
 - `Docker`
 
 ---
+
+This version clearly presents two distinct options for deployment: running locally or using Docker. Let me know if you'd like any further changes!
