@@ -5,6 +5,10 @@ import xml.etree.ElementTree as ET
 
 import requests
 import urllib3
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Suppress SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -16,6 +20,19 @@ logging.basicConfig(filename="rss_watcher.log", level=logging.INFO,
 # Read Pushover credentials from environment variables
 PUSHOVER_TOKEN = os.getenv("PUSHOVER_TOKEN")
 PUSHOVER_USER_KEY = os.getenv("PUSHOVER_USER_KEY")
+
+# Read filter keywords from the environment variable
+FILTER_KEYWORDS = os.getenv("FILTER_KEYWORDS")
+
+# If FILTER_KEYWORDS is not None, split it into a list, else keep it as an empty list
+if FILTER_KEYWORDS:
+    filter_keywords = [keyword.strip().lower() for keyword in FILTER_KEYWORDS.split(',')]
+else:
+    filter_keywords = []
+
+# Read the wait time between feed checks from the environment variable
+# If not provided, default to 60 seconds
+WAIT_TIME = int(os.getenv("WAIT_TIME", 120))
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -93,7 +110,9 @@ def check_feed():
             seen_posts.add(post_id)
         # Send notification for new posts only after the first run
         elif post_id not in seen_posts:
-            send_notification(title, link)
+            # Check if filtering is required
+            if not filter_keywords or any(keyword in title.lower() for keyword in filter_keywords):
+                send_notification(title, link)
             seen_posts.add(post_id)
 
     # After the first run, set first_run to False
@@ -106,7 +125,7 @@ def monitor_feed():
     while True:
         logging.info("Checking for new posts...")
         check_feed()
-        time.sleep(60)  # Wait for 1 minute before checking again
+        time.sleep(WAIT_TIME)
 
 
 if __name__ == "__main__":
