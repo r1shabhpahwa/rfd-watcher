@@ -22,10 +22,12 @@ This Python script monitors the **RedFlagDeals "Hot Deals"** RSS feed and sends 
    ```bash
    pip install -r requirements.txt
    ```
-3. Set environment variables:  
+3. Set environment variables in the .env file:  
    ```bash
-   export PUSHOVER_TOKEN=your_token
-   export PUSHOVER_USER_KEY=your_key
+   PUSHOVER_TOKEN=your_token
+   PUSHOVER_USER_KEY=your_key
+   FILTER_KEYWORDS=Amazon.ca, ATL, Apple   #Optional
+   WAIT_TIME=300   #Optional
    ```
 4. Run the script:  
    ```bash
@@ -41,9 +43,3 @@ This Python script monitors the **RedFlagDeals "Hot Deals"** RSS feed and sends 
    ```bash
    docker run -d -e PUSHOVER_TOKEN=your_token -e PUSHOVER_USER_KEY=your_key rishabhpahwa/rfd_watcher_image
    ```
-
-## Customization
-- Change the RSS feed URL or check interval in the code.
-
-## License
-MIT License (see LICENSE file).
